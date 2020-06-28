@@ -24,16 +24,45 @@ async function getRandomUser() {
 
 // Double Money
 
-function doubleMoney(){
+function doubleMoney() {
     data = data.map(user => {
         return {...user, money: user.money * 2}
     })
     updateDOM()
 }
 
+// Sort user by richest
+
+function sortByRichest() {
+    data.sort( (a, b) => b.money - a.money)
+
+    updateDOM()
+}
+
+// Filter only millionaires users
+
+function showOnlyMillionaires() {
+    data = data.filter(user => {
+        return user.money >= 1000000
+    })
+    
+    updateDOM()
+}
+
+// Calculate the total Wealth
+
+function calculateEntireWealth() {
+    const wealth = data.reduce((acc, user) => (acc += user.money), 20)
+
+    const wealthElement = document.createElement('div')
+    wealthElement.innerHTML = `<h3>Total Wealth: <strong>${formatMoney(wealth)}</strong></h3>`
+    main.appendChild(wealthElement)
+
+}
+
 // Add new object o data array
 
-function addData(obj){
+function addData(obj) {
     data.push(obj)
 
     updateDOM()
@@ -63,3 +92,6 @@ function formatMoney(number) {
 
 addUserBtn.addEventListener('click', getRandomUser)
 doubleBtn.addEventListener('click', doubleMoney)
+sortBtn.addEventListener('click', sortByRichest)
+showMillionairesBtn.addEventListener('click', showOnlyMillionaires)
+calculateWealthBtn.addEventListener('click', calculateEntireWealth)
